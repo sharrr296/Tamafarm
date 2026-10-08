@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Publik
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/produk/{produk}', [ProdukController::class, 'show']);
 
@@ -15,6 +15,7 @@ Route::get('/produk/{produk}', [ProdukController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::put('/password', [AuthController::class, 'ubahPassword']);
     Route::get('/kategori', [KategoriController::class, 'index']);
 
     // Admin: kelola kategori & produk

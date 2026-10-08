@@ -22,8 +22,7 @@ class ProdukController extends Controller
             'stok'            => 'required|numeric|min:0',
             'moq_restoran'    => 'required_if:satuan,kg|nullable|numeric|min:1',
             'moq_luar_negeri' => 'required_if:satuan,kg|nullable|numeric|min:1',
-            'gambar'          => 'nullable|image|max:2048',
-        ];
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',        ];
     }
 
     public function index()

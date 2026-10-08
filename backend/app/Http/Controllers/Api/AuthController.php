@@ -32,4 +32,30 @@ class AuthController extends Controller
     {
         return response()->json(['success'=>true,'data'=>$request->user()]);
     }
+    public function ubahPassword(Request $request)
+    {
+        $data = $request->validate([
+            'password_lama' => 'required|string',
+            'password_baru' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = $request->user();
+
+        if (!Hash::check($data['password_lama'], $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Password lama salah',
+                'errors'  => ['password_lama' => ['Password lama salah']],
+            ], 422);
+        }
+
+        $user->update(['password' => $data['password_baru']]); // otomatis di-hash
+
+        // Perangkat lain dikeluarkan, perangkat yang sedang dipakai tetap login
+        $user->tokens()
+            ->where('id', '!=', $user->currentAccessToken()->id)
+            ->delete();
+
+        return response()->json(['success' => true, 'message' => 'Password diperbarui']);
+    }
 }
