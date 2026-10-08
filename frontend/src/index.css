@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+
+  --color-tank: #0e2f3b;
+  --color-tank-soft: #17424f;
+  --color-foam: #f1f6f4;
+  --color-mist: #d3e0dc;
+  --color-sand: #e7e0cf;
+  --color-kelp: #3f6f62;
+  --color-shell: #c8362d;
+  --color-shell-dark: #a82a23;
+}
+
+html {
+  background: var(--color-foam);
+  color: var(--color-tank);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-kelp);
+  outline-offset: 2px;
+}
+
+/* Satu momen animasi: baris papan harga muncul bergantian saat halaman dibuka. */
+@keyframes row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.row-in { animation: row-in 0.45s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
