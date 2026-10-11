@@ -21,6 +21,14 @@ class ProdukLobster extends Model
         return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
 
+    public function detailPesanan()
+    {
+        return $this->hasMany(
+            DetailPesanan::class,
+            'id_produk'
+        );
+    }
+
     public function getGambarUrlAttribute()
     {
         return $this->gambar ? asset('storage/' . $this->gambar) : null;
